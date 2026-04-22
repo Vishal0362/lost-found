@@ -33,69 +33,45 @@
 const API = "http://localhost:5000/api/items";
 
 // 📤 Upload Item
-document.getElementById("uploadForm").addEventListener("submit", async (e) => {
+document.getElementById("uploadForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const formData = new FormData();
-  formData.append("title", document.getElementById("title").value);
-  formData.append("description", document.getElementById("description").value);
-  formData.append("type", document.getElementById("type").value);
-    navigator.geolocation.getCurrentPosition(async (position) => {
+  const button = document.querySelector("button");
+  button.disabled = true;
 
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
+  if (!navigator.geolocation) {
+    alert("Geolocation not supported");
+    button.disabled = false;
+    return;
+  }
 
-        const formData = new FormData();
-        formData.append("title", document.getElementById("title").value);
-        formData.append("description", document.getElementById("description").value);
-        formData.append("type", document.getElementById("type").value);
-        formData.append("lat", lat);
-        formData.append("lng", lng);
-        formData.append("image", document.getElementById("image").files[0]);
+  navigator.geolocation.getCurrentPosition(async (position) => {
 
-        await fetch(`${API}/upload`, {
-            method: "POST",
-            body: formData
-        });
+    const lat = position.coords.latitude;
+    const lng = position.coords.longitude;
 
-        alert("Uploaded with location!");
-        loadItems();
+    const formData = new FormData();
+    formData.append("title", document.getElementById("title").value);
+    formData.append("description", document.getElementById("description").value);
+    formData.append("type", document.getElementById("type").value);
+    formData.append("lat", lat);
+    formData.append("lng", lng);
+    formData.append("image", document.getElementById("image").files[0]);
 
-        }, (error) => {
-        alert("Location access denied");
+    await fetch(`${API}/upload`, {
+      method: "POST",
+      body: formData
     });
-  formData.append("image", document.getElementById("image").files[0]);
 
-  await fetch(`${API}/upload`, {
-    method: "POST",
-    body: formData
+    alert("Uploaded with location!");
+    button.disabled = false;
+    loadItems();
+
+  }, () => {
+    alert("Location access denied");
+    button.disabled = false;
   });
-
-  alert("Uploaded!");
-  loadItems();
 });
-
-// 📥 Load Items
-async function loadItems() {
-  const res = await fetch(API);
-  const data = await res.json();
-
-  const container = document.getElementById("items");
-  container.innerHTML = "";
-
-  data.forEach(item => {
-    container.innerHTML += `
-      <div class="bg-white p-3 rounded shadow">
-        <img src="http://localhost:5000/uploads/${item.image}" class="w-full h-40 object-cover mb-2"/>
-        <h2 class="text-xl font-bold">${item.title}</h2>
-        <p>${item.description}</p>
-        <span class="text-sm text-gray-500">${item.type}</span>
-      </div>
-    `;
-  });
-}
-
-loadItems();
 </script>
 
 </body>

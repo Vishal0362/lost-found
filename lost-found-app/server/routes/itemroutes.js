@@ -25,7 +25,10 @@ router.post("/upload", upload.single("image"), async (req, res) => {
       description,
       type,
       image: req.file.filename,
-      location: { lat, lng }
+      location: {
+        lat: Number(lat),
+        lng: Number(lng)
+}
     });
 
     await newItem.save();
