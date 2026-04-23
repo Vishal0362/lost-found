@@ -1,0 +1,67 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-image:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(246, 241, 232, 0.9)),
+    radial-gradient(circle at top left, rgba(255, 107, 87, 0.12), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.12), transparent 28%);
+}
+
+.mesh {
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(circle at center, black, transparent 80%);
+}
+
+.input-field {
+  width: 100%;
+  border-radius: 1rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: rgba(248, 250, 252, 0.95);
+  padding: 0.9rem 1rem;
+  color: #0f172a;
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+.input-file {
+  width: 100%;
+  border-radius: 1rem;
+  border: 1px dashed rgba(15, 23, 42, 0.2);
+  background: rgba(248, 250, 252, 0.95);
+  padding: 0.85rem 1rem;
+}
+
+.input-field:focus,
+.input-file:focus {
+  border-color: rgba(15, 118, 110, 0.45);
+  box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.12);
+}
+
+.card-shell {
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.card-shell:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 70px rgba(15, 23, 42, 0.12);
+}
+
+.slide-up {
+  animation: slide-up 500ms ease both;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

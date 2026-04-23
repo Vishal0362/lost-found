@@ -16,7 +16,7 @@ app.use(express.static(clientDir));
 
 app.use("/api/items", require("./routes/itemroutes"));
 
-app.get("*", (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.join(clientDir, "index.html"));
 });
 
